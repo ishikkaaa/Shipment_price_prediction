@@ -1,3 +1,5 @@
+#This code defines a class DataValidation that is part of a larger machine learning pipeline. It's designed to validate the schema and quality of your dataset and detect data drift between the training and testing datasets.
+
 import json
 from shipment.logger import logging
 import sys
@@ -191,6 +193,9 @@ class DataValidation:
         except Exception as e:
             raise shippingException(e, sys) from e
         
+
+    #Data drift occurs when the data your model sees during production (i.e., real-world usage or testing data) becomes different from the data it was trained on.
+    #This can degrade model performance over time.    
     def detect_dataset_drift(
         self, reference: DataFrame, production: DataFrame, get_ratio: bool = False
     ) -> Union[bool, float]:
