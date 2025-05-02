@@ -101,8 +101,8 @@ class MainUtils:
             if model_name.lower().startswith("xgb") is True:
                 model = xgboost.__dict__[model_name]()
             else:
-                model_idx = [model[0] for model in all_estimators()].index(model_name)
-                model = all_estimators().__getitem__(model_idx)[1]()
+                model_dict = dict(all_estimators())
+                model = model_dict[model_name]()
             logging.info("Exited the get_base_model method of MainUtils class")
             return model
         except Exception as e:
@@ -160,8 +160,7 @@ class MainUtils:
             "Entered the get_best_model_with_name_and_score method of MainUtils class"
         )
         try:
-            best_score = max(model_list)[0]
-            best_model = max(model_list)[1]
+            best_score, best_model = max(model_list, key=lambda x: x[0])
             logging.info(
                 "Exited the get_best_model_with_name_and_score method of MainUtils class"
             )
